@@ -3,7 +3,7 @@
 # FILENAME: cs4250assn1.py
 # SPECIFICATION: description of the program
 # FOR: CS 4250- Assignment #1
-# TIME SPENT: how long it took you to complete the assignment
+# TIME SPENT: 8 Hours
 #-----------------------------------------------------------*/
 
 #IMPORTANT NOTE: DO NOT USE ANY ADVANCED PYTHON LIBRARY TO COMPLETE THIS CODE SUCH
