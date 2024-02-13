@@ -47,11 +47,23 @@ print(documents)
 #Conducting stemming. Hint: use a dictionary to map word variations to their stem.
 #--> add your Python code here
 stemming = {
-    "love" : ["loves", "loved"],
+    "love" : "loves",
     "dog" : "dogs",
     "cat" : "cats"
 }
-print("Stemming:")
+
+key_list = list(stemming.keys())
+val_list = list(stemming.values())
+
+for key, val in stemming.items():
+  for i in range(len(documents)):
+    for j in range(len(documents[i])):
+      if(val == documents[i][j]):
+        #Get the key
+        position = val_list.index(val)
+        documents[i][j] = key
+
+print("Stemming (replace variants with its stem):")
 print(documents)
 
 #Identifying the index terms.
@@ -70,22 +82,35 @@ docTermMatrix = [[0]*3]*3
 
 #Getting the total count of documents
 totaldocuments = len(documents)
+idfs = []
+tfs = [[0]*3]*len(terms)
 
-#Calculating weights for matrix
+#Calculating idf
+for k in range(len(terms)):
+  idfcount = 0
+  for i in range(len(documents)):
+    for isterm in documents[i]:
+      idfcount = idfcount + 1
+  idf = math.log(idfcount/totaldocuments)
+  idfs.append(idf)
+
+#Calculating tf
 for i in range(len(documents)):
-
   for k in range(len(terms)):
     termcount = 0
     for j in range(len(documents[i])):
       if(terms[k] == documents[i][j]):
         termcount = termcount + 1
-    #Calculating tf
-    #docTermMatrix[i][k] = termcount/len(documents[i])
-#Calculating idf
+    tfs[i][k] = termcount/len(documents[i])
+
+#Calculating tf.idf
+for i in range(len(documents)):
+  for j in range(len(idfs)):
+    docTermMatrix[i][j] = tfs[i][j] * idfs[j]
 
 #Printing the document-term matrix.
 #--> add your Python code here
-print("Document Term Matrix: ")
+print("\nDocument Term Matrix: ")
 print("       love   cat   dog")
 for i in range(len(docTermMatrix)):
   rowstring = "Row " + str(i) + ": "
